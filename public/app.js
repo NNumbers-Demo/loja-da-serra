@@ -134,8 +134,8 @@ function renderGraficoCidades() {
 
   const defs = svgEl('defs');
   const gradiente = svgEl('linearGradient', { id: 'grad-cidade', x1: '0', y1: '0', x2: '1', y2: '0' });
-  gradiente.append(svgEl('stop', { offset: '0%', 'stop-color': '#6ee7d7' }));
-  gradiente.append(svgEl('stop', { offset: '100%', 'stop-color': '#7aa7ff' }));
+  gradiente.append(svgEl('stop', { offset: '0%', 'stop-color': '#b0935f' }));
+  gradiente.append(svgEl('stop', { offset: '100%', 'stop-color': '#d8c49c' }));
   defs.append(gradiente);
   svg.append(defs);
 
