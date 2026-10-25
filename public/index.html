@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Painel de pedidos da Loja da Serra, com análise de urgência por IA." />
+  <title>Painel da Loja da Serra</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9B%B0%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">⛰</span>
+      <div>
+        <p class="brand-kicker">Painel de pedidos</p>
+        <h1 id="loja-nome">Loja da Serra</h1>
+      </div>
+    </div>
+    <div class="topbar-meta">
+      <span class="chip" id="data-ref">—</span>
+      <a class="chip chip-link" href="/healthz" target="_blank" rel="noreferrer">
+        <span class="dot" id="health-dot" aria-hidden="true"></span>
+        <span id="health-texto">verificando</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="cards" id="cards" aria-label="Totais do dia">
+      <article class="card skeleton" aria-hidden="true"></article>
+      <article class="card skeleton" aria-hidden="true"></article>
+      <article class="card skeleton" aria-hidden="true"></article>
+      <article class="card skeleton" aria-hidden="true"></article>
+    </section>
+
+    <section class="ia" aria-labelledby="ia-titulo">
+      <div class="ia-head">
+        <div>
+          <h2 id="ia-titulo">Análise do dia</h2>
+          <p class="muted">O agente lê os pedidos, define a prioridade e classifica a urgência de cada um.</p>
+        </div>
+        <button class="btn" id="btn-analisar" type="button">
+          <span class="btn-icone" aria-hidden="true">✦</span>
+          <span class="btn-texto">Analisar com IA</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="ia-corpo" id="ia-corpo" hidden>
+        <p class="resumo" id="ia-resumo"></p>
+        <div class="prioridade">
+          <span class="prioridade-rotulo">Prioridade do dia</span>
+          <p id="ia-prioridade"></p>
+        </div>
+        <ul class="totais-ia" id="ia-totais"></ul>
+      </div>
+
+      <p class="ia-aviso" id="ia-aviso" role="status" hidden></p>
+    </section>
+
+    <section class="pedidos" aria-labelledby="pedidos-titulo">
+      <div class="pedidos-head">
+        <h2 id="pedidos-titulo">Pedidos</h2>
+        <span class="muted" id="pedidos-contagem"></span>
+      </div>
+      <div class="grade" id="lista-pedidos"></div>
+      <p class="muted vazio" id="vazio" hidden>Nenhum pedido para mostrar.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Painel da Loja da Serra · dados fictícios de demonstração</p>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

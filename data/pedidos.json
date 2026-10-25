@@ -1,0 +1,56 @@
+{
+  "loja": "Loja da Serra",
+  "data_referencia": "2026-10-24",
+  "pedidos": [
+    {
+      "id": "PED-1042",
+      "cliente": "Mariana Costa",
+      "valor": 389.90,
+      "itens": 3,
+      "status": "pago",
+      "prazo_entrega": "2026-10-25",
+      "cidade": "Campos do Jordão",
+      "observacao": "Presente de aniversário, precisa chegar antes de sábado"
+    },
+    {
+      "id": "PED-1043",
+      "cliente": "Rafael Nunes",
+      "valor": 129.00,
+      "itens": 1,
+      "status": "aguardando_pagamento",
+      "prazo_entrega": "2026-10-30",
+      "cidade": "São Paulo",
+      "observacao": ""
+    },
+    {
+      "id": "PED-1044",
+      "cliente": "Beatriz Alves",
+      "valor": 1249.50,
+      "itens": 6,
+      "status": "pago",
+      "prazo_entrega": "2026-10-24",
+      "cidade": "Santo Antônio do Pinhal",
+      "observacao": "Cliente ligou duas vezes perguntando do rastreio"
+    },
+    {
+      "id": "PED-1045",
+      "cliente": "Tiago Prado",
+      "valor": 74.90,
+      "itens": 2,
+      "status": "devolucao_solicitada",
+      "prazo_entrega": "2026-10-22",
+      "cidade": "Taubaté",
+      "observacao": "Produto chegou com a embalagem amassada"
+    },
+    {
+      "id": "PED-1046",
+      "cliente": "Larissa Moura",
+      "valor": 560.00,
+      "itens": 4,
+      "status": "pago",
+      "prazo_entrega": "2026-10-28",
+      "cidade": "São José dos Campos",
+      "observacao": "Quer trocar a cor de um item antes do envio"
+    }
+  ]
+}
