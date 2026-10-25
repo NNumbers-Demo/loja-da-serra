@@ -18,6 +18,7 @@ const el = (id) => document.getElementById(id);
 const estado = {
   dados: { loja: 'Loja da Serra', data_referencia: '', pedidos: [] },
   analise: null,
+  filtro: 'todas',
 };
 
 function dataCurta(iso) {
@@ -88,6 +89,120 @@ function renderCards() {
     card.append(criar('p', 'card-nota', c.nota));
     container.append(card);
   }
+}
+
+/* ---------------- gráfico por cidade ---------------- */
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function svgEl(tag, attrs = {}) {
+  const node = document.createElementNS(SVG_NS, tag);
+  for (const chave of Object.keys(attrs)) node.setAttribute(chave, String(attrs[chave]));
+  return node;
+}
+
+function agruparPorCidade() {
+  const mapa = new Map();
+  for (const pedido of estado.dados.pedidos) {
+    const cidade = String(pedido.cidade || '').trim() || 'Sem cidade';
+    mapa.set(cidade, (mapa.get(cidade) || 0) + Number(pedido.valor || 0));
+  }
+  return [...mapa.entries()]
+    .map(([cidade, valor]) => ({ cidade, valor }))
+    .sort((a, b) => b.valor - a.valor || a.cidade.localeCompare(b.cidade, 'pt-BR'));
+}
+
+function renderGraficoCidades() {
+  const svg = el('grafico-cidades');
+  if (!svg) return;
+
+  const dados = agruparPorCidade();
+  svg.textContent = '';
+
+  const LARGURA = 760;
+  const ESQ = 210;
+  const GAP = 14;
+  const INICIO = ESQ + GAP;
+  const VALOR_DIR = 748;
+  const MAX_BARRA = VALOR_DIR - 96 - INICIO;
+  const ALTURA_LINHA = 42;
+  const ALTURA_BARRA = 22;
+  const TOPO = 10;
+  const altura = TOPO * 2 + Math.max(dados.length, 1) * ALTURA_LINHA;
+
+  svg.setAttribute('viewBox', `0 0 ${LARGURA} ${altura}`);
+
+  const defs = svgEl('defs');
+  const gradiente = svgEl('linearGradient', { id: 'grad-cidade', x1: '0', y1: '0', x2: '1', y2: '0' });
+  gradiente.append(svgEl('stop', { offset: '0%', 'stop-color': '#6ee7d7' }));
+  gradiente.append(svgEl('stop', { offset: '100%', 'stop-color': '#7aa7ff' }));
+  defs.append(gradiente);
+  svg.append(defs);
+
+  if (!dados.length) {
+    const vazio = svgEl('text', {
+      x: LARGURA / 2,
+      y: altura / 2,
+      'text-anchor': 'middle',
+      'dominant-baseline': 'middle',
+      class: 'barra-cidade',
+    });
+    vazio.textContent = 'Nenhum pedido para somar.';
+    svg.append(vazio);
+    return;
+  }
+
+  const maior = Math.max(...dados.map((d) => d.valor));
+
+  dados.forEach((item, indice) => {
+    const baseY = TOPO + indice * ALTURA_LINHA;
+    const barraY = baseY + (ALTURA_LINHA - ALTURA_BARRA) / 2;
+    const largura = maior > 0 ? Math.max((item.valor / maior) * MAX_BARRA, 3) : 3;
+
+    const cidade = svgEl('text', {
+      x: ESQ,
+      y: baseY + ALTURA_LINHA / 2,
+      'text-anchor': 'end',
+      'dominant-baseline': 'middle',
+      class: 'barra-cidade',
+    });
+    cidade.textContent = item.cidade;
+    svg.append(cidade);
+
+    svg.append(
+      svgEl('rect', {
+        x: INICIO,
+        y: barraY,
+        width: MAX_BARRA,
+        height: ALTURA_BARRA,
+        rx: 6,
+        class: 'barra-trilha',
+      }),
+    );
+
+    const barra = svgEl('rect', {
+      x: INICIO,
+      y: barraY,
+      width: largura,
+      height: ALTURA_BARRA,
+      rx: 6,
+      class: 'barra-valor',
+    });
+    const titulo = svgEl('title');
+    titulo.textContent = `${item.cidade}: ${moeda.format(item.valor)}`;
+    barra.append(titulo);
+    svg.append(barra);
+
+    const valor = svgEl('text', {
+      x: VALOR_DIR,
+      y: baseY + ALTURA_LINHA / 2,
+      'text-anchor': 'end',
+      'dominant-baseline': 'middle',
+      class: 'barra-total',
+    });
+    valor.textContent = moeda.format(item.valor);
+    svg.append(valor);
+  });
 }
 
 /* ---------------- pedidos ---------------- */
@@ -163,16 +278,46 @@ function cardPedido(pedido) {
   return card;
 }
 
+function pedidosFiltrados(lista) {
+  if (estado.filtro === 'todas' || !estado.analise) return lista;
+  return lista.filter((pedido) => estado.analise.pedidos[pedido.id]?.urgencia === estado.filtro);
+}
+
+function atualizarFiltros() {
+  const temAnalise = Boolean(estado.analise);
+  if (!temAnalise && estado.filtro !== 'todas') estado.filtro = 'todas';
+
+  for (const botao of document.querySelectorAll('.filtro')) {
+    const alvo = botao.dataset.filtro;
+    const ativo = alvo === estado.filtro;
+    botao.classList.toggle('ativo', ativo);
+    botao.setAttribute('aria-pressed', String(ativo));
+    botao.disabled = alvo !== 'todas' && !temAnalise;
+  }
+
+  const dica = el('filtros-dica');
+  if (dica) dica.hidden = temAnalise;
+}
+
 function renderPedidos() {
-  const lista = ordenarPedidos();
+  const todos = ordenarPedidos();
+  const lista = pedidosFiltrados(todos);
   const container = el('lista-pedidos');
   container.textContent = '';
 
-  el('pedidos-contagem').textContent = estado.analise
-    ? `${lista.length} pedidos · ordenados por urgência`
-    : `${lista.length} pedidos · ordenados por prazo`;
+  const base = estado.analise ? 'ordenados por urgência' : 'ordenados por prazo';
+  el('pedidos-contagem').textContent =
+    lista.length === todos.length
+      ? `${todos.length} pedidos · ${base}`
+      : `${lista.length} de ${todos.length} pedidos · ${base}`;
 
-  el('vazio').hidden = lista.length > 0;
+  const vazio = el('vazio');
+  vazio.hidden = lista.length > 0;
+  vazio.textContent =
+    todos.length > 0 && lista.length === 0
+      ? `Nenhum pedido com urgência ${ROTULO_URGENCIA[estado.filtro].toLowerCase()}.`
+      : 'Nenhum pedido para mostrar.';
+
   for (const pedido of lista) container.append(cardPedido(pedido));
 }
 
@@ -238,13 +383,14 @@ async function analisar() {
 
     estado.analise = {
       resumo: corpo.resumo,
-      prioridade: corpo.prioridade_do_dia,
+      prioridade_do_dia: corpo.prioridade_do_dia,
       pedidos: mapa,
       totais: corpo.totais,
     };
 
     esconderAviso();
     renderAnalise(estado.analise);
+    atualizarFiltros();
     renderPedidos();
   } catch (erro) {
     mostrarAviso(`Não foi possível concluir a análise: ${erro.message}`);
@@ -277,6 +423,13 @@ async function checarSaude() {
 
 async function iniciar() {
   el('btn-analisar').addEventListener('click', analisar);
+  el('filtros').addEventListener('click', (evento) => {
+    const botao = evento.target.closest('.filtro');
+    if (!botao || botao.disabled) return;
+    estado.filtro = botao.dataset.filtro;
+    atualizarFiltros();
+    renderPedidos();
+  });
   checarSaude();
 
   try {
@@ -286,6 +439,8 @@ async function iniciar() {
     el('loja-nome').textContent = estado.dados.loja;
     el('data-ref').textContent = `Referência ${dataCurta(estado.dados.data_referencia)}`;
     renderCards();
+    renderGraficoCidades();
+    atualizarFiltros();
     renderPedidos();
   } catch (erro) {
     el('cards').textContent = '';

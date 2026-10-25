@@ -37,6 +37,21 @@
       <article class="card skeleton" aria-hidden="true"></article>
     </section>
 
+    <section class="cidades" aria-labelledby="cidades-titulo">
+      <div class="cidades-head">
+        <h2 id="cidades-titulo">Valor por cidade</h2>
+        <p class="muted">Soma dos pedidos na fila, por cidade de entrega.</p>
+      </div>
+      <svg
+        class="grafico"
+        id="grafico-cidades"
+        viewBox="0 0 760 240"
+        role="img"
+        aria-labelledby="cidades-titulo"
+        preserveAspectRatio="xMinYMin meet"
+      ></svg>
+    </section>
+
     <section class="ia" aria-labelledby="ia-titulo">
       <div class="ia-head">
         <div>
@@ -67,6 +82,14 @@
         <h2 id="pedidos-titulo">Pedidos</h2>
         <span class="muted" id="pedidos-contagem"></span>
       </div>
+      <div class="filtros" id="filtros" role="group" aria-label="Filtrar pedidos por urgência">
+        <button class="filtro ativo" type="button" data-filtro="todas" aria-pressed="true">Todas</button>
+        <button class="filtro" type="button" data-filtro="alta" aria-pressed="false" disabled>Alta</button>
+        <button class="filtro" type="button" data-filtro="media" aria-pressed="false" disabled>Média</button>
+        <button class="filtro" type="button" data-filtro="baixa" aria-pressed="false" disabled>Baixa</button>
+        <span class="filtros-dica" id="filtros-dica">Disponível após a análise com IA</span>
+      </div>
+
       <div class="grade" id="lista-pedidos"></div>
       <p class="muted vazio" id="vazio" hidden>Nenhum pedido para mostrar.</p>
     </section>

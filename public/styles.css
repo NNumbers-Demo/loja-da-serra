@@ -277,6 +277,86 @@ h2 { margin: 0 0 4px; font-size: 17px; letter-spacing: -0.2px; }
 }
 .ia-aviso.info { color: #d8e6f5; border-color: var(--borda-forte); background: rgba(255, 255, 255, 0.04); }
 
+/* ---------- gráfico por cidade ---------- */
+.cidades {
+  margin: 22px 0 0;
+  padding: clamp(18px, 2.4vw, 24px);
+  border-radius: calc(var(--raio) + 2px);
+  border: 1px solid var(--borda);
+  background: linear-gradient(170deg, rgba(23, 33, 47, 0.86), rgba(12, 19, 29, 0.82));
+  box-shadow: var(--sombra);
+}
+
+.cidades-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.grafico {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.grafico .barra-trilha { fill: rgba(255, 255, 255, 0.045); }
+.grafico .barra-valor { fill: url(#grad-cidade); }
+.grafico .barra-cidade { fill: var(--texto-suave); font-size: 12.5px; }
+.grafico .barra-total {
+  fill: var(--texto);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 620px) {
+  .cidades { overflow-x: auto; }
+  .grafico { min-width: 540px; }
+}
+
+/* ---------- filtro de urgência ---------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.filtro {
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--texto-suave);
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+
+.filtro:hover:not(:disabled) { color: var(--texto); border-color: var(--borda-forte); }
+.filtro:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.filtro:disabled { opacity: 0.42; cursor: not-allowed; }
+
+.filtro.ativo {
+  color: #04121a;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--acento), var(--acento-2));
+}
+
+.filtro[data-filtro="alta"].ativo { background: linear-gradient(135deg, #ff9a9a, var(--alta)); }
+.filtro[data-filtro="media"].ativo { background: linear-gradient(135deg, #ffd894, var(--media)); }
+.filtro[data-filtro="baixa"].ativo { background: linear-gradient(135deg, #8fe6c1, var(--baixa)); }
+
+.filtros-dica { font-size: 12px; color: #6d7f94; }
+
 /* ---------- pedidos ---------- */
 .pedidos { margin-top: 34px; }
 
