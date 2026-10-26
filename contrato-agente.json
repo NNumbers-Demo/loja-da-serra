@@ -1,20 +1,65 @@
 {
-  "descricao": "Contrato entre a aplicação 'Painel da Loja da Serra' (backend no Zero) e o agente 'Analista de pedidos' (Agents DEV, endpoint síncrono ?wait=60 com 'Responder ao webhook'). Dados fictícios.",
+  "descricao": "Contrato entre o site 'Loja da Serra' (backend no Zero) e o agente 'Prioridade de pedidos' (Agents, org NNumbers; endpoint síncrono ?wait=60 com 'Responder ao webhook').",
   "requisicao_exemplo": {
     "loja": "Loja da Serra",
     "data_referencia": "2026-10-24",
     "pedidos": [
-      {"id": "PED-1042", "cliente": "Mariana Costa", "valor": 389.90, "itens": 3, "status": "pago", "prazo_entrega": "2026-10-25", "cidade": "Campos do Jordão", "observacao": "Presente de aniversário, precisa chegar antes de sábado"},
-      {"id": "PED-1043", "cliente": "Rafael Nunes", "valor": 129.00, "itens": 1, "status": "aguardando_pagamento", "prazo_entrega": "2026-10-30", "cidade": "São Paulo", "observacao": ""},
-      {"id": "PED-1044", "cliente": "Beatriz Alves", "valor": 1249.50, "itens": 6, "status": "pago", "prazo_entrega": "2026-10-24", "cidade": "Santo Antônio do Pinhal", "observacao": "Cliente ligou duas vezes perguntando do rastreio"},
-      {"id": "PED-1045", "cliente": "Tiago Prado", "valor": 74.90, "itens": 2, "status": "devolucao_solicitada", "prazo_entrega": "2026-10-22", "cidade": "Taubaté", "observacao": "Produto chegou com a embalagem amassada"},
-      {"id": "PED-1046", "cliente": "Larissa Moura", "valor": 560.00, "itens": 4, "status": "pago", "prazo_entrega": "2026-10-28", "cidade": "São José dos Campos", "observacao": "Quer trocar a cor de um item antes do envio"}
+      {
+        "id": "PED-1042",
+        "cliente": "Mariana Costa",
+        "valor": 389.9,
+        "itens": 3,
+        "status": "pago",
+        "prazo_entrega": "2026-10-25",
+        "cidade": "Campos do Jordão",
+        "observacao": "Presente de aniversário, precisa chegar antes de sábado"
+      },
+      {
+        "id": "PED-1043",
+        "cliente": "Rafael Nunes",
+        "valor": 129.0,
+        "itens": 1,
+        "status": "aguardando_pagamento",
+        "prazo_entrega": "2026-10-30",
+        "cidade": "São Paulo",
+        "observacao": ""
+      },
+      {
+        "id": "PED-1044",
+        "cliente": "Beatriz Alves",
+        "valor": 1249.5,
+        "itens": 6,
+        "status": "pago",
+        "prazo_entrega": "2026-10-24",
+        "cidade": "Santo Antônio do Pinhal",
+        "observacao": "Cliente ligou duas vezes perguntando do rastreio"
+      },
+      {
+        "id": "PED-1045",
+        "cliente": "Tiago Prado",
+        "valor": 74.9,
+        "itens": 2,
+        "status": "devolucao_solicitada",
+        "prazo_entrega": "2026-10-22",
+        "cidade": "Taubaté",
+        "observacao": "Produto chegou com a embalagem amassada"
+      },
+      {
+        "id": "PED-1046",
+        "cliente": "Larissa Moura",
+        "valor": 560.0,
+        "itens": 4,
+        "status": "pago",
+        "prazo_entrega": "2026-10-28",
+        "cidade": "São José dos Campos",
+        "observacao": "Quer trocar a cor de um item antes do envio"
+      }
     ]
   },
   "requisicao_schema": {
     "loja": "string",
     "data_referencia": "string (AAAA-MM-DD)",
-    "pedidos": "array de 1 a 50 itens: {id: string, cliente: string, valor: number, itens: integer, status: 'pago'|'aguardando_pagamento'|'enviado'|'devolucao_solicitada'|'cancelado', prazo_entrega: string AAAA-MM-DD, cidade: string, observacao: string (pode ser vazia)}"
+    "pedidos": "array de 1 a 50 itens: {id: string, cliente: string, valor: number, itens: integer, status: 'em_separacao'|'pago'|'aguardando_pagamento'|'enviado'|'devolucao_solicitada'|'cancelado', data_pedido: string AAAA-MM-DD, cidade: string, prazo_entrega?: string AAAA-MM-DD (opcional), observacao?: string (opcional)}"
   },
   "resposta_schema": {
     "resumo": "string, até 3 frases, em português",
@@ -26,12 +71,41 @@
     "resumo": "Dois pedidos vencem até amanhã e um cliente já está ansioso pelo rastreio. Há uma devolução atrasada e um pedido parado no pagamento.",
     "prioridade_do_dia": "Despachar hoje o PED-1044 e mandar o rastreio à Beatriz.",
     "pedidos": [
-      {"id": "PED-1044", "urgencia": "alta", "motivo": "Prazo vence hoje e a cliente cobrou duas vezes", "proxima_acao": "Despachar por expresso e enviar o rastreio"},
-      {"id": "PED-1042", "urgencia": "alta", "motivo": "Presente com data marcada para sábado", "proxima_acao": "Separar hoje e confirmar a entrega até sexta"},
-      {"id": "PED-1045", "urgencia": "media", "motivo": "Devolução com prazo já vencido", "proxima_acao": "Gerar a etiqueta de devolução e oferecer troca"},
-      {"id": "PED-1046", "urgencia": "media", "motivo": "Troca de cor pedida antes do envio", "proxima_acao": "Confirmar a cor e segurar o envio"},
-      {"id": "PED-1043", "urgencia": "baixa", "motivo": "Aguardando pagamento, prazo folgado", "proxima_acao": "Enviar lembrete de pagamento amanhã"}
+      {
+        "id": "PED-1044",
+        "urgencia": "alta",
+        "motivo": "Prazo vence hoje e a cliente cobrou duas vezes",
+        "proxima_acao": "Despachar por expresso e enviar o rastreio"
+      },
+      {
+        "id": "PED-1042",
+        "urgencia": "alta",
+        "motivo": "Presente com data marcada para sábado",
+        "proxima_acao": "Separar hoje e confirmar a entrega até sexta"
+      },
+      {
+        "id": "PED-1045",
+        "urgencia": "media",
+        "motivo": "Devolução com prazo já vencido",
+        "proxima_acao": "Gerar a etiqueta de devolução e oferecer troca"
+      },
+      {
+        "id": "PED-1046",
+        "urgencia": "media",
+        "motivo": "Troca de cor pedida antes do envio",
+        "proxima_acao": "Confirmar a cor e segurar o envio"
+      },
+      {
+        "id": "PED-1043",
+        "urgencia": "baixa",
+        "motivo": "Aguardando pagamento, prazo folgado",
+        "proxima_acao": "Enviar lembrete de pagamento amanhã"
+      }
     ],
-    "totais": {"alta": 2, "media": 2, "baixa": 1}
+    "totais": {
+      "alta": 2,
+      "media": 2,
+      "baixa": 1
+    }
   }
 }
