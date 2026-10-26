@@ -7,7 +7,7 @@
   <meta name="description" content="Pedidos em separação da Loja da Serra, com análise de prioridade do dia." />
   <title>Loja da Serra · Pedidos em separação</title>
   <link rel="stylesheet" href="/styles.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e7dccb'/%3E%3Cpath d='M18 72l20-34 12 20 8-12 24 26z' fill='%237d6547'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23cde5d8'/%3E%3Cpath d='M18 72l20-34 12 20 8-12 24 26z' fill='%2314804a'/%3E%3C/svg%3E" />
 </head>
 <body>
   <header class="topo">
@@ -50,6 +50,17 @@
         <p class="cartao__valor" id="total-cidades">—</p>
         <p class="cartao__nota">Destinos distintos na fila</p>
       </article>
+    </section>
+
+    <section class="grafico" aria-labelledby="grafico-titulo">
+      <div class="grafico__topo">
+        <div>
+          <h2 id="grafico-titulo">Valor em separação por cidade</h2>
+          <p class="nota">Quanto está parado na fila em cada destino.</p>
+        </div>
+        <span class="nota" id="grafico-resumo"></span>
+      </div>
+      <ul class="barras" id="grafico-cidades" aria-label="Valor em separação por cidade"></ul>
     </section>
 
     <section class="analise" aria-labelledby="analise-titulo">

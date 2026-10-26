@@ -63,6 +63,48 @@ function renderResumo(dados) {
   $('data-referencia').textContent = referencia ? `Referência ${referencia}` : 'Referência indisponível';
 }
 
+function renderGraficoCidades() {
+  const lista = $('grafico-cidades');
+  const porCidade = new Map();
+
+  for (const pedido of pedidos) {
+    const cidade = pedido.cidade || 'Sem cidade';
+    porCidade.set(cidade, (porCidade.get(cidade) || 0) + (Number(pedido.valor) || 0));
+  }
+
+  const cidades = [...porCidade.entries()].sort((a, b) => b[1] - a[1]);
+  const maior = cidades.length ? cidades[0][1] : 0;
+
+  const barras = cidades.map(([cidade, valor]) => {
+    const item = el('li', 'barra');
+    const trilho = el('div', 'barra__trilho');
+    const preenchimento = el('div', 'barra__preenchimento');
+    preenchimento.dataset.largura = maior > 0 ? `${Math.max((valor / maior) * 100, 3)}%` : '0%';
+    trilho.append(preenchimento);
+
+    const rotulo = el('span', 'barra__cidade', cidade);
+    rotulo.title = `${cidade}: ${formatarMoeda(valor)}`;
+
+    item.append(rotulo, trilho, el('span', 'barra__valor valor', formatarMoeda(valor)));
+    return { item, preenchimento };
+  });
+
+  if (!barras.length) {
+    lista.replaceChildren(el('li', 'nota', 'Nenhum pedido em separação.'));
+    $('grafico-resumo').textContent = '';
+    return;
+  }
+
+  lista.replaceChildren(...barras.map((barra) => barra.item));
+  requestAnimationFrame(() => {
+    for (const barra of barras) barra.preenchimento.style.width = barra.preenchimento.dataset.largura;
+  });
+
+  const total = cidades.reduce((soma, [, valor]) => soma + valor, 0);
+  const quantas = cidades.length === 1 ? '1 cidade' : `${numero.format(cidades.length)} cidades`;
+  $('grafico-resumo').textContent = `${quantas} · ${formatarMoeda(total)}`;
+}
+
 function celulaUrgencia(pedido) {
   const analise = analisePorId.get(String(pedido.id));
   const caixa = el('div', 'urgencia');
@@ -171,6 +213,7 @@ async function carregar() {
     }
 
     renderResumo(dados);
+    renderGraficoCidades();
     renderTabela();
 
     if (dados.agente_configurado === false) {
@@ -181,6 +224,8 @@ async function carregar() {
   } catch (erro) {
     $('data-referencia').textContent = 'Sem dados';
     $('status-dados').hidden = false;
+    $('grafico-cidades').replaceChildren(el('li', 'nota', 'Não foi possível carregar os valores.'));
+    $('grafico-resumo').textContent = '';
     mostrarAviso('Não foi possível carregar os pedidos em separação agora.', true);
     $('vazio').hidden = false;
   }

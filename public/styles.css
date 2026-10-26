@@ -1,21 +1,23 @@
 :root {
-  --fundo: #faf7f1;
-  --fundo-alt: #f4eee3;
-  --superficie: #fffdfa;
-  --bege: #e8dcc9;
-  --bege-forte: #d7c3a4;
-  --bege-suave: #f1e9dc;
-  --tinta: #2e2a23;
-  --tinta-suave: #6f6558;
-  --tinta-fraca: #9a8f80;
-  --linha: #ebe1d1;
+  --fundo: #f6faf7;
+  --fundo-alt: #edf4ef;
+  --superficie: #ffffff;
+  --verde-claro: #cde5d8;
+  --verde-medio: #8cc7a7;
+  --verde-suave: #e8f4ed;
+  --verde: #14804a;
+  --verde-escuro: #0b4f2d;
+  --tinta: #1f2a24;
+  --tinta-suave: #586a60;
+  --tinta-fraca: #84958a;
+  --linha: #e1ebe4;
   --alta: #a9482f;
   --alta-bg: #f7e3dc;
   --media: #a1741f;
   --media-bg: #f8ecd4;
   --baixa: #5c6b52;
   --baixa-bg: #e9ede2;
-  --sombra: 0 1px 2px rgba(72, 56, 34, .05), 0 8px 24px -18px rgba(72, 56, 34, .35);
+  --sombra: 0 1px 2px rgba(28, 58, 44, .05), 0 8px 24px -18px rgba(28, 58, 44, .35);
   --raio: 16px;
 }
 
@@ -37,7 +39,7 @@ body {
 
 h1, h2 { margin: 0; font-weight: 600; letter-spacing: -.01em; }
 
-a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underline-offset: 3px; }
+a { color: var(--tinta); text-decoration-color: var(--verde-medio); text-underline-offset: 3px; }
 
 .valor { white-space: nowrap; font-variant-numeric: tabular-nums; }
 
@@ -49,9 +51,9 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   gap: 16px;
   align-items: center;
   justify-content: space-between;
-  padding: 22px clamp(18px, 4vw, 48px);
-  border-bottom: 1px solid var(--linha);
-  background: linear-gradient(180deg, var(--fundo-alt), var(--fundo));
+  padding: 24px clamp(18px, 4vw, 48px);
+  background: linear-gradient(140deg, var(--verde) 0%, var(--verde) 45%, var(--verde-escuro) 100%);
+  color: #f2fbf6;
 }
 
 .topo__marca { display: flex; align-items: center; gap: 14px; }
@@ -62,8 +64,8 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   width: 46px;
   height: 46px;
   border-radius: 13px;
-  background: var(--bege);
-  color: #7d6547;
+  background: rgba(255, 255, 255, .18);
+  color: #ffffff;
   flex: none;
 }
 
@@ -74,7 +76,7 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   font-size: .72rem;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--tinta-suave);
+  color: rgba(255, 255, 255, .78);
 }
 
 .topo h1 { font-size: clamp(1.35rem, 3vw, 1.7rem); }
@@ -86,15 +88,15 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  border: 1px solid var(--bege);
+  border: 1px solid rgba(255, 255, 255, .3);
   border-radius: 999px;
-  background: var(--superficie);
-  color: var(--tinta-suave);
+  background: rgba(255, 255, 255, .14);
+  color: #f4fbf7;
   font-size: .82rem;
   white-space: nowrap;
 }
 
-.selo--vazio { color: var(--alta); border-color: var(--alta-bg); background: var(--alta-bg); }
+.selo--vazio { color: #8b3418; border-color: #f7cfc4; background: #fdeee9; }
 
 /* ---------- estrutura ---------- */
 
@@ -124,7 +126,7 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   box-shadow: var(--sombra);
 }
 
-.cartao--destaque { background: linear-gradient(160deg, #fffdf8, var(--bege-suave)); border-color: var(--bege); }
+.cartao--destaque { background: linear-gradient(160deg, #ffffff, var(--verde-suave)); border-color: var(--verde-claro); }
 
 .cartao__rotulo {
   margin: 0;
@@ -140,7 +142,8 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
 
 /* ---------- análise ---------- */
 
-.analise {
+.analise,
+.grafico {
   padding: clamp(18px, 3vw, 26px);
   background: var(--superficie);
   border: 1px solid var(--linha);
@@ -156,17 +159,77 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   justify-content: space-between;
 }
 
-.analise h2 { font-size: 1.12rem; }
+.analise h2,
+.grafico h2 { font-size: 1.12rem; }
+
+.grafico__topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.grafico__topo .nota { margin: 0; }
+
+/* ---------- gráfico de barras ---------- */
+
+.barras {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barra {
+  display: grid;
+  grid-template-columns: minmax(0, 168px) minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  align-items: center;
+}
+
+.barra__cidade {
+  font-size: .9rem;
+  font-weight: 500;
+  color: var(--tinta);
+  overflow-wrap: anywhere;
+}
+
+.barra__trilho {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--verde-suave);
+  overflow: hidden;
+}
+
+.barra__preenchimento {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--verde-medio), var(--verde));
+  transition: width .5s cubic-bezier(.22, .61, .36, 1);
+}
+
+.barra__valor {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--tinta);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
 
 .botao {
   display: inline-flex;
   align-items: center;
   gap: 9px;
   padding: 11px 20px;
-  border: 1px solid #6f5a3f;
+  border: 1px solid var(--verde-escuro);
   border-radius: 999px;
-  background: #7d6547;
-  color: #fffdf8;
+  background: var(--verde);
+  color: #ffffff;
   font: inherit;
   font-size: .94rem;
   font-weight: 500;
@@ -174,10 +237,10 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   transition: background .16s ease, transform .16s ease, opacity .16s ease;
 }
 
-.botao:hover:not(:disabled) { background: #6b5438; }
+.botao:hover:not(:disabled) { background: var(--verde-escuro); }
 .botao:active:not(:disabled) { transform: translateY(1px); }
 .botao:disabled { opacity: .62; cursor: progress; }
-.botao:focus-visible { outline: 2px solid #7d6547; outline-offset: 3px; }
+.botao:focus-visible { outline: 2px solid var(--verde); outline-offset: 3px; }
 
 .botao__icone { font-size: .85em; opacity: .9; }
 
@@ -202,7 +265,7 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
 
 .prioridade {
   padding: 14px 16px;
-  border-left: 3px solid var(--bege-forte);
+  border-left: 3px solid var(--verde-medio);
   border-radius: 0 12px 12px 0;
   background: var(--fundo-alt);
 }
@@ -231,8 +294,8 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   margin: 16px 0 0;
   padding: 12px 14px;
   border-radius: 12px;
-  background: var(--bege-suave);
-  border: 1px solid var(--bege);
+  background: var(--verde-suave);
+  border: 1px solid var(--verde-claro);
   color: var(--tinta-suave);
   font-size: .9rem;
 }
@@ -286,7 +349,7 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
 
 .linha { border-bottom: 1px solid var(--linha); font-size: .94rem; }
 .linha:last-child { border-bottom: 0; }
-.linha:hover { background: #fdfaf4; }
+.linha:hover { background: #f4faf6; }
 
 .cliente { font-weight: 500; overflow-wrap: anywhere; }
 .cidade { color: var(--tinta-suave); overflow-wrap: anywhere; }
@@ -305,8 +368,8 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   font-size: .76rem;
   font-weight: 500;
   white-space: nowrap;
-  border: 1px solid var(--bege);
-  background: var(--bege-suave);
+  border: 1px solid var(--verde-claro);
+  background: var(--verde-suave);
   color: var(--tinta-suave);
 }
 
@@ -321,7 +384,7 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
   gap: 2px 14px;
   margin-top: -2px;
   padding-left: 10px;
-  border-left: 2px solid var(--bege);
+  border-left: 2px solid var(--verde-claro);
 }
 
 .detalhe { font-size: .82rem; color: var(--tinta-suave); line-height: 1.4; margin: 0; }
@@ -347,6 +410,18 @@ a { color: var(--tinta); text-decoration-color: var(--bege-forte); text-underlin
 
 @media (max-width: 760px) {
   .tabela__cabecalho { display: none; }
+
+  .barra {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "cidade valor"
+      "trilho trilho";
+    gap: 6px 12px;
+  }
+
+  .barra__cidade { grid-area: cidade; }
+  .barra__valor { grid-area: valor; }
+  .barra__trilho { grid-area: trilho; }
 
   .linha {
     grid-template-columns: 1fr auto;
