@@ -25,3 +25,6 @@ Site público da Loja da Serra, publicado no Zero a partir deste repositório.
 
 - `Dockerfile` a partir de `node:24-alpine`, com `npm`, `npx` e `corepack` removidos da imagem, arquivos com dono 10001, `USER 10001`, `EXPOSE 8080` e `HEALTHCHECK` no `/healthz`.
 - `AGENT_URL` e `AGENT_TOKEN` vêm dos Secrets do projeto no Zero.
+- O site está no ar em https://lojadaserra.zero.nnumbers.com.br e é publicado pelo Zero a partir do `main` deste repositório.
+- Para publicar: primeiro o commit e o push no `main`; depois `zero deploy svc_01M5TY9W1QFQ3B0DDP2JFSMS93 --reason "<o que mudou>"`. O comando acompanha as etapas ao vivo e termina com «estado: Online» quando a versão nova está no ar.
+- A credencial do Zero já está configurada nesta máquina: não leia, não mostre e não mexa no arquivo de credencial.
