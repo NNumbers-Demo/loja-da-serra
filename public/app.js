@@ -63,52 +63,6 @@ function renderResumo(dados) {
   $('data-referencia').textContent = referencia ? `Referência ${referencia}` : 'Referência indisponível';
 }
 
-function renderGraficoCidades() {
-  const porCidade = new Map();
-  for (const pedido of pedidos) {
-    const cidade = String(pedido.cidade || 'Sem cidade').trim() || 'Sem cidade';
-    porCidade.set(cidade, (porCidade.get(cidade) || 0) + (Number(pedido.valor) || 0));
-  }
-
-  const itens = [...porCidade.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  const lista = $('grafico-barras');
-  const eixo = $('grafico-eixo');
-  const totalGeral = itens.reduce((soma, [, valor]) => soma + valor, 0);
-  const maior = itens.length ? itens[0][1] : 0;
-
-  if (itens.length === 0) {
-    lista.replaceChildren();
-    $('grafico-total').textContent = '';
-    eixo.hidden = true;
-    return;
-  }
-
-  lista.replaceChildren(
-    ...itens.map(([cidade, valor]) => {
-      const item = el('li', 'barra');
-      const nome = el('span', 'barra__cidade', cidade);
-      const trilho = el('div', 'barra__trilho');
-      const preenchimento = el('div', 'barra__preenchimento');
-      const largura = maior > 0 ? Math.max((valor / maior) * 100, 2) : 0;
-      preenchimento.style.width = `${largura.toFixed(1)}%`;
-      trilho.append(preenchimento);
-      trilho.setAttribute('aria-hidden', 'true');
-
-      const participacao = totalGeral > 0 ? Math.round((valor / totalGeral) * 100) : 0;
-      const valorTexto = el('span', 'barra__valor', formatarMoeda(valor));
-      valorTexto.title = `${participacao}% do total em separação`;
-
-      item.append(nome, trilho, valorTexto);
-      return item;
-    }),
-  );
-
-  $('grafico-total').textContent =
-    `${numero.format(itens.length)} ${itens.length === 1 ? 'cidade' : 'cidades'} · ${formatarMoeda(totalGeral)}`;
-  eixo.textContent = `Barra proporcional ao maior valor da fila: ${itens[0][0]}, ${formatarMoeda(maior)}.`;
-  eixo.hidden = false;
-}
-
 function celulaUrgencia(pedido) {
   const analise = analisePorId.get(String(pedido.id));
   const caixa = el('div', 'urgencia');
@@ -217,7 +171,6 @@ async function carregar() {
     }
 
     renderResumo(dados);
-    renderGraficoCidades();
     renderTabela();
 
     if (dados.agente_configurado === false) {
