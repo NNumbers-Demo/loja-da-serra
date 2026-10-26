@@ -1,0 +1,123 @@
+{
+  "loja": "Loja da Serra",
+  "data_referencia": "2026-10-26",
+  "pedidos": [
+    {
+      "id": "PED-14",
+      "cliente": "Aline Mendonça",
+      "valor": 693.80,
+      "itens": 5,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-23",
+      "cidade": "Campos do Jordão"
+    },
+    {
+      "id": "PED-22",
+      "cliente": "Natália Pacheco",
+      "valor": 1097.87,
+      "itens": 20,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-23",
+      "cidade": "Lorena"
+    },
+    {
+      "id": "PED-41",
+      "cliente": "Empório Paraíba",
+      "valor": 433.00,
+      "itens": 5,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-23",
+      "cidade": "Pindamonhangaba"
+    },
+    {
+      "id": "PED-81",
+      "cliente": "Larissa Fontes",
+      "valor": 986.24,
+      "itens": 16,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-23",
+      "cidade": "Pindamonhangaba"
+    },
+    {
+      "id": "PED-110",
+      "cliente": "Ana Beatriz Moreira",
+      "valor": 960.12,
+      "itens": 20,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-23",
+      "cidade": "Guaratinguetá"
+    },
+    {
+      "id": "PED-149",
+      "cliente": "Luís Henrique Prado",
+      "valor": 775.50,
+      "itens": 4,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-23",
+      "cidade": "Jacareí"
+    },
+    {
+      "id": "PED-80",
+      "cliente": "Thiago Bittencourt",
+      "valor": 953.12,
+      "itens": 7,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-24",
+      "cidade": "São José dos Campos"
+    },
+    {
+      "id": "PED-96",
+      "cliente": "Carlos Eduardo Siqueira",
+      "valor": 437.92,
+      "itens": 4,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-24",
+      "cidade": "Campos do Jordão"
+    },
+    {
+      "id": "PED-104",
+      "cliente": "Empório São Bento",
+      "valor": 177.10,
+      "itens": 7,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-24",
+      "cidade": "Caçapava"
+    },
+    {
+      "id": "PED-112",
+      "cliente": "João Pedro Rangel",
+      "valor": 17.00,
+      "itens": 2,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-24",
+      "cidade": "Pindamonhangaba"
+    },
+    {
+      "id": "PED-131",
+      "cliente": "João Pedro Rangel",
+      "valor": 720.90,
+      "itens": 5,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-24",
+      "cidade": "Pindamonhangaba"
+    },
+    {
+      "id": "PED-192",
+      "cliente": "Café Colonial Capivari",
+      "valor": 221.65,
+      "itens": 11,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-24",
+      "cidade": "Guaratinguetá"
+    },
+    {
+      "id": "PED-198",
+      "cliente": "Rodrigo Valadares",
+      "valor": 449.10,
+      "itens": 9,
+      "status": "em_separacao",
+      "data_pedido": "2026-10-24",
+      "cidade": "Lorena"
+    }
+  ]
+}

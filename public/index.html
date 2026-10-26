@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="Pedidos em separação da Loja da Serra, com análise de prioridade do dia." />
+  <title>Loja da Serra · Pedidos em separação</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e7dccb'/%3E%3Cpath d='M18 72l20-34 12 20 8-12 24 26z' fill='%237d6547'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="topo">
+    <div class="topo__marca">
+      <span class="marca-montanha" aria-hidden="true">
+        <svg viewBox="0 0 48 32" role="presentation" focusable="false">
+          <path d="M0 30 L14 4 L24 22 L31 10 L48 30 Z" fill="currentColor" opacity=".9" />
+        </svg>
+      </span>
+      <div>
+        <p class="topo__kicker">Pedidos em separação</p>
+        <h1 id="loja-nome">Loja da Serra</h1>
+      </div>
+    </div>
+    <div class="topo__meta">
+      <span class="selo" id="data-referencia">carregando…</span>
+      <span class="selo selo--vazio" id="status-dados" hidden>não foi possível carregar</span>
+    </div>
+  </header>
+
+  <main class="pagina">
+    <section class="resumo" aria-label="Resumo da fila">
+      <article class="cartao">
+        <p class="cartao__rotulo">Pedidos em separação</p>
+        <p class="cartao__valor" id="total-pedidos">—</p>
+        <p class="cartao__nota" id="total-clientes">—</p>
+      </article>
+      <article class="cartao cartao--destaque">
+        <p class="cartao__rotulo">Total em separação</p>
+        <p class="cartao__valor valor" id="total-valor">—</p>
+        <p class="cartao__nota">Soma dos pedidos ainda na fila</p>
+      </article>
+      <article class="cartao">
+        <p class="cartao__rotulo">Itens a separar</p>
+        <p class="cartao__valor" id="total-itens">—</p>
+        <p class="cartao__nota">Unidades somadas</p>
+      </article>
+      <article class="cartao">
+        <p class="cartao__rotulo">Cidades atendidas</p>
+        <p class="cartao__valor" id="total-cidades">—</p>
+        <p class="cartao__nota">Destinos distintos na fila</p>
+      </article>
+    </section>
+
+    <section class="analise" aria-labelledby="analise-titulo">
+      <div class="analise__topo">
+        <div>
+          <h2 id="analise-titulo">Análise da operação</h2>
+          <p class="nota">O agente lê a fila, diz a prioridade do dia e a urgência de cada pedido.</p>
+        </div>
+        <button class="botao" id="btn-analisar" type="button">
+          <span class="botao__icone" aria-hidden="true">✦</span>
+          <span class="botao__texto">Analisar pedidos</span>
+          <span class="girando" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="analise__corpo" id="analise-corpo" hidden>
+        <p class="resumo-texto" id="analise-resumo"></p>
+        <div class="prioridade">
+          <span class="prioridade__rotulo">Prioridade do dia</span>
+          <p id="analise-prioridade"></p>
+        </div>
+        <ul class="etiquetas" id="analise-totais" aria-label="Totais por urgência"></ul>
+      </div>
+
+      <p class="aviso" id="analise-aviso" role="status" hidden></p>
+    </section>
+
+    <section class="fila" aria-labelledby="fila-titulo">
+      <div class="fila__topo">
+        <h2 id="fila-titulo">Pedidos</h2>
+        <span class="nota" id="fila-contagem"></span>
+      </div>
+
+      <div class="tabela" id="tabela-pedidos" role="table" aria-labelledby="fila-titulo">
+        <div class="tabela__cabecalho" role="row">
+          <span role="columnheader">Cliente</span>
+          <span role="columnheader">Cidade</span>
+          <span role="columnheader" class="col-num">Itens</span>
+          <span role="columnheader" class="col-num">Valor</span>
+          <span role="columnheader">Pedido</span>
+          <span role="columnheader" class="col-num">Urgência</span>
+        </div>
+        <div id="corpo-tabela"></div>
+      </div>
+
+      <p class="nota vazio" id="vazio" hidden>Nenhum pedido em separação.</p>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Loja da Serra · pedidos da tabela Pedidos do Infinite Data</p>
+    <p class="rodape__nota">Feito com <a href="/healthz">status do serviço</a></p>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
